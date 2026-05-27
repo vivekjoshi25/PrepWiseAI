@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Sparkles, ArrowRight } from 'lucide-react'
+import { Search, Sparkles, ArrowRight, Loader2 } from 'lucide-react'
 import { PRESET_ROLES } from '../constants/roles'
 import { createInterview } from '../api/interviews'
 import { PageHeader } from '../components/ui/PageHeader'
@@ -71,8 +71,18 @@ export function StartInterview() {
               disabled={Boolean(busyRole)}
               className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-cyan-500 to-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition enabled:hover:brightness-110 disabled:opacity-60"
             >
-              {busyRole && !PRESET_ROLES.includes(busyRole) ? 'Generating…' : 'Generate interview'}
-              <ArrowRight className="h-4 w-4" />
+              {busyRole && !PRESET_ROLES.includes(busyRole) ? (
+  <>
+    <Loader2 className="h-4 w-4 animate-spin" />
+    Generating...
+  </>
+) : (
+  <>
+    Generate interview
+    <ArrowRight className="h-4 w-4" />
+  </>
+)}
+             
             </button>
           </form>
         </GlassCard>
@@ -102,7 +112,9 @@ export function StartInterview() {
                         <Sparkles className="h-5 w-5 text-cyan-200" />
                       </div>
                       <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
-                        {loading ? 'Working' : 'Select'}
+                        {loading ? (
+  <Loader2 className="h-4 w-4 animate-spin text-cyan-300" />
+) : ('Select')}
                       </span>
                     </div>
                     <p className="mt-4 font-display text-lg font-semibold text-white">{role}</p>
