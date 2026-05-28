@@ -3,6 +3,7 @@ const express = require("express");
 const connectDB = require("./config/db");
 const userRoute=require('./routes/userroute');
 const interviewRoutes =require('./routes/interviewRoutes');
+const cors = require("cors")
 
 const app = express();
 app.use(express.json());
@@ -12,6 +13,12 @@ connectDB();
 app.get("/", (req, res) => {
     res.send("hello");
 });
+
+app.use(cors({
+  origin: "https://prep-wise-ai-ruddy.vercel.app",
+  credentials: true
+}));
+
 app.use("/api/users", userRoute);
 app.use('/api/interviews',interviewRoutes);
 
