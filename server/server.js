@@ -10,14 +10,16 @@ app.use(express.json());
 // Database connect
 connectDB();
 
-app.get("/", (req, res) => {
-    res.send("hello");
-});
-
 app.use(cors({
   origin: "https://prep-wise-ai-ruddy.vercel.app",
   credentials: true
 }));
+
+app.get("/", (req, res) => {
+    res.send("hello");
+});
+
+
 
 app.use("/api/users", userRoute);
 app.use('/api/interviews',interviewRoutes);
